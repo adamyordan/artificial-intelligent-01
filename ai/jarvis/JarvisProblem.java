@@ -11,11 +11,14 @@ import aima.core.search.uninformed.IterativeDeepeningSearch;
 import java.util.List;
 
 /**
- * Created by adam on 23/10/16.
+ * Class to represent the Jarvis and Tony Problem, and provide
+ * the solution using Iterative Deepening Search and A* strategy.
+ * @author Adam Jordan 1406567536
+ * @version 16.10.25
  */
 public class JarvisProblem {
 
-    public static enum Strategy {
+    public enum Strategy {
         Ids, Astar
     };
 

@@ -6,7 +6,9 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * Created by adam on 23/10/16.
+ * Implementation of Jarvis problem's state
+ * @author Adam Jordan 1406567536
+ * @version 25/10/26
  */
 public class JarvisEnvironmentStateImpl implements JarvisEnvironmentState {
 

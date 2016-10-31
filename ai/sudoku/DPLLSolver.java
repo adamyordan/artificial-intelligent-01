@@ -13,10 +13,26 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by adam on 25/10/16.
+ * Class extending DPLLSatisfiable and contains the method
+ * used to return the satisfying model of a SAT Problem
+ * using DPLL Algorithm
+ * @author Adam Jordan 1406567536
+ * @version 25/10/26
  */
 public class DPLLSolver extends DPLLSatisfiable {
 
+    /**
+     * DPLL(clauses, symbols, model)
+     *
+     * @param clauses
+     *            the set of clauses.
+     * @param symbols
+     *            a list of unassigned symbols.
+     * @param model
+     *            contains the values for assigned symbols.
+     * @return model if the model is satisfiable under current assignments, null
+     *         otherwise.
+     */
     public Model getSatisfyingModel(Set<Clause> clauses, List<PropositionSymbol> symbols,
                                     Model model) {
         // if every clause in clauses is true in model then return true

@@ -1,5 +1,3 @@
-package ai;
-
 import ai.sudoku.SudokuProblem;
 import aima.core.util.datastructure.XYLocation;
 
@@ -7,9 +5,11 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Created by adam on 23/10/16.
+ * Main class for sudoku as SAT problem solver
+ * @author Adam Jordan 1406567536
+ * @version 25/10/26
  */
-public class Tugas2A {
+public class Tugas1B {
 
     private static final String ERROR_ARG_LENGTH = "Invalid argument length. " +
             "Use: java Tugas2A <strategy> <fileinput> <fileoutput>\n";
@@ -20,7 +20,13 @@ public class Tugas2A {
     private static final String ERROR_FILE_INPUT_NOTFOUND = "Invalid File Input. " +
             "File not found.\n";
 
+    /**
+     * Main method for sudoku as SAT Problem
+     * @param args {strategy, inputFile, outputFile}
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
+        // Validating argument length
         if (args.length != 3) {
             System.err.print(ERROR_ARG_LENGTH);
             System.exit(1);
@@ -30,6 +36,7 @@ public class Tugas2A {
         final String inputFileArg = args[1];
         final String outputFileArg = args[2];
 
+        // Validating strategy argument
         SudokuProblem.Strategy strategy = null;
         if (strategyArg.equalsIgnoreCase("dpll")) {
             strategy = SudokuProblem.Strategy.DPLL;
@@ -40,6 +47,7 @@ public class Tugas2A {
             System.exit(1);
         }
 
+        // Validating input file
         BufferedReader bufferedReader = null;
         try {
             bufferedReader = new BufferedReader(new FileReader(inputFileArg));
@@ -53,6 +61,7 @@ public class Tugas2A {
         token = new StringTokenizer(bufferedReader.readLine(), " ");
         int size = Integer.parseInt(token.nextToken());
 
+        // Reading initial or preassigned values of the sudoku board
         Map<XYLocation, Integer> initialValues = new HashMap<>();
         for (int i = 1; i <= size; i++) {
             token = new StringTokenizer(bufferedReader.readLine(), " ");
@@ -64,10 +73,11 @@ public class Tugas2A {
             }
         }
 
+        // Solve the sudoku problem
         SudokuProblem sudokuProblem = new SudokuProblem(size, initialValues);
-
         String output = sudokuProblem.run(strategy);
 
+        // Write result to output file
         BufferedWriter out = new BufferedWriter(new FileWriter(outputFileArg));
         out.write(output);
         out.close();

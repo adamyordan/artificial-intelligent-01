@@ -4,37 +4,12 @@ import java.util.*;
 
 /**
  * Implementation of Kruskal Algorithm
- * source: https://github.com/abreen/Kruskal/blob/master/Kruskal.java
- *
- * Modified to fulfil needed adjustments for Jarvis Problem.
- */
-
-/*
- * This program runs an empirical test of Kruskal's minimum spanning
- * tree algorithm, making use of an efficient disjoint-set data
- * structure.
- *
- * The program generates two random, complete graphs G_1 = (V_1, E_1) and
- * G_2 = (V_2, E_2) each consisting of n vertices and n-choose-2 edges.
- * G_1 is a graph whose edges E_1 are of random weight in the range [0, 1].
- * G_2 is a graph whose vertices V_2 are labeled with random coordinates in
- * the unit square, and E_2 consists of edges whose weights are the
- * Euclidean distances between any two vertices in V_2.
- *
- * The program generates these graphs and runs Kruskal's minimum spanning
- * tree algorithm on them, printing the total weight of the tree for each
- * test.
- *
- * The program should be invoked from the command line with two integers:
- * the seed that should be used for the random number generator, and the
- * number of vertices in the randomly generated graphs.
  */
 public class Kruskal {
 
     public static float getVertexDistance(List<Vertex> vertices) {
 
-    /* Create a list of edges */
-        ArrayList<Edge> edges = new ArrayList<Edge>();
+        ArrayList<Edge> edges = new ArrayList<>();
 
         for (int i = 0; i < vertices.size(); i++) {
             for (int j = 0; j < vertices.size(); j++) {
@@ -42,33 +17,33 @@ public class Kruskal {
                 Vertex a = vertices.get(i);
                 Vertex b = vertices.get(j);
 
-        /*
-         * Use a simplified distance formula to calculate the distance
-         * between vertices a and b
-         */
+                /*
+                 * Use a simplified distance formula to calculate the distance
+                 * between vertices a and b
+                 */
                 Edge e = new Edge(a, b, Vertex.simpleDistance(a, b));
                 edges.add(e);
             }
         }
 
-    /* Create the disjoint-set data structure */
+        /* Create the disjoint-set data structure */
         DisjointSet d = new DisjointSet(vertices);
 
-    /* Create a list of edges */
+        /* Create a list of edges */
         ArrayList<Edge> tree = new ArrayList<Edge>();
 
-    /* Java's modified version of mergesort guarantees nlog(n) time here */
+        /* Java's modified version of mergesort guarantees nlog(n) time here */
         Collections.sort(edges);
 
-    /* Kruskal's algorithm */
+        /* Kruskal's algorithm */
         for (Edge e : edges) {
             Vertex u = e.getU();
             Vertex v = e.getV();
             if (d.find(u.getNode()) != d.find(v.getNode())) {
-        /* Vertices v and u are not in the same component */
+                /* Vertices v and u are not in the same component */
                 tree.add(e);
 
-        /* Union them in the tree */
+                /* Union them in the tree */
                 d.union(u.getNode(), v.getNode());
             }
         }

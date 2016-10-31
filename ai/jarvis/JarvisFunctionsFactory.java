@@ -10,7 +10,13 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * Created by adam on 23/10/16.
+ * Jarvis problem's funtions factory
+ * Generating
+ *      - Actions Function
+ *      - Result Function
+ *      - Step Cost Function
+ * @author Adam Jordan 1406567536
+ * @version 25/10/26
  */
 public class JarvisFunctionsFactory {
 
@@ -18,6 +24,10 @@ public class JarvisFunctionsFactory {
     private static ResultFunction _resultFunction;
     private static StepCostFunction _stepCostFunction;
 
+    /**
+     * Get Actions Function
+     * @return actionsFunction
+     */
     public static ActionsFunction getActionsFunction() {
         if (_actionsFunction == null) {
             _actionsFunction = new JarvisActionsFunction();
@@ -25,6 +35,10 @@ public class JarvisFunctionsFactory {
         return _actionsFunction;
     }
 
+    /**
+     * Get Result Function
+     * @return resultFunction
+     */
     public static ResultFunction getResultFunction() {
         if (_resultFunction == null) {
             _resultFunction = new JarvisResultFunction();
@@ -32,6 +46,10 @@ public class JarvisFunctionsFactory {
         return _resultFunction;
     }
 
+    /**
+     * Get Step Cost Function
+     * @return stepCostFunction
+     */
     public static StepCostFunction getStepCostFunction() {
         if (_stepCostFunction == null) {
             _stepCostFunction = new JarvisStepCostFunction();
@@ -39,8 +57,16 @@ public class JarvisFunctionsFactory {
         return _stepCostFunction;
     }
 
+    /**
+     * Jarvis problem's Actions Function
+     */
     private static class JarvisActionsFunction implements ActionsFunction {
 
+        /**
+         * Actions(state)
+         * @param state current state
+         * @return set of possible actions under current state
+         */
         @Override
         public Set<Action> actions(Object state) {
             JarvisEnvironmentState jarvisEnvironmentState = (JarvisEnvironmentState) state;
@@ -68,8 +94,17 @@ public class JarvisFunctionsFactory {
         }
     }
 
+    /**
+     * Jarvis problem's Result Function
+     */
     private static class JarvisResultFunction implements ResultFunction {
 
+        /**
+         * Result(state, action)
+         * @param state current state
+         * @param action actions taken
+         * @return next state
+         */
         @Override
         public Object result(Object state, Action action) {
             JarvisEnvironmentState newState = ((JarvisEnvironmentState) state).getClone();
@@ -88,8 +123,16 @@ public class JarvisFunctionsFactory {
         }
     }
 
+    /**
+     * Jarvis problem's Step Cost Function
+     */
     private static class JarvisStepCostFunction implements StepCostFunction {
 
+        /**
+         * Cost (state, action, stateDelta):
+         * TakeStuff                 = 0
+         * Move [up|down|left|right] = 1
+         */
         @Override
         public double c(Object state, Action action, Object sDelta) {
             if (action == JarvisAction.TakeStuff) {

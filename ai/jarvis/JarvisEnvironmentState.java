@@ -6,7 +6,9 @@ import aima.core.util.datastructure.XYLocation;
 import java.util.Set;
 
 /**
- * Created by adam on 23/10/16.
+ * Jarvis problem's state
+ * @author Adam Jordan 1406567536
+ * @version 25/10/26
  */
 public interface JarvisEnvironmentState extends EnvironmentState {
 

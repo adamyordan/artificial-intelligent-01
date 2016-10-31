@@ -1,5 +1,3 @@
-package ai;
-
 import ai.jarvis.JarvisEnvironmentState;
 import ai.jarvis.JarvisEnvironmentStateImpl;
 import ai.jarvis.JarvisProblem;
@@ -11,7 +9,9 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 /**
- * Created by adam on 23/10/16.
+ * Main class for Jarvis and Tony problem
+ * @author Adam Jordan 1406567536
+ * @version 25/10/26
  */
 public class Tugas1A {
 
@@ -24,7 +24,13 @@ public class Tugas1A {
     private static final String ERROR_FILE_INPUT_NOTFOUND = "Invalid File Input. " +
             "File not found.\n";
 
+    /**
+     * Main method for Jarvis and Tony problem
+     * @param args {strategy, inputFile, outputFile}
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
+        // Validating argument length
         if (args.length != 3) {
             System.err.print(ERROR_ARG_LENGTH);
             System.exit(1);
@@ -34,6 +40,7 @@ public class Tugas1A {
         final String inputFileArg = args[1];
         final String outputFileArg = args[2];
 
+        // Validating strategy argument
         JarvisProblem.Strategy strategy = null;
         if (strategyArg.equalsIgnoreCase("ids")) {
             strategy = JarvisProblem.Strategy.Ids;
@@ -44,6 +51,7 @@ public class Tugas1A {
             System.exit(1);
         }
 
+        // Validating input file
         BufferedReader bufferedReader = null;
         try {
             bufferedReader = new BufferedReader(new FileReader(inputFileArg));
@@ -54,15 +62,18 @@ public class Tugas1A {
 
         StringTokenizer token;
 
+        // Read cell height and width
         token = new StringTokenizer(bufferedReader.readLine(), ",");
         int n = Integer.parseInt(token.nextToken());
         int m = Integer.parseInt(token.nextToken());
 
+        // Read initial position of Tony
         token = new StringTokenizer(bufferedReader.readLine(), ",");
         int xTony = Integer.parseInt(token.nextToken());
         int yTony = Integer.parseInt(token.nextToken());
         XYLocation tonyLocation = new XYLocation(yTony, xTony);
 
+        // Read positions of stuffs
         token = new StringTokenizer(bufferedReader.readLine(), " ");
         Set<XYLocation> stuffLocations = new LinkedHashSet<>();
         while (token.hasMoreTokens()) {
@@ -73,6 +84,7 @@ public class Tugas1A {
             stuffLocations.add(new XYLocation(yStuff, xStuff));
         }
 
+        // Read positions of obstacles
         token = new StringTokenizer(bufferedReader.readLine(), " ");
         Set<XYLocation> obstacleLocations = new LinkedHashSet<>();
         while (token.hasMoreTokens()) {
@@ -83,16 +95,19 @@ public class Tugas1A {
             obstacleLocations.add(new XYLocation(yObstacle, xObstacle));
         }
 
+        // Setup initial state
         JarvisEnvironmentState initialState = new JarvisEnvironmentStateImpl(
                 m,
                 n,
                 tonyLocation,
                 stuffLocations,
                 obstacleLocations);
-        JarvisProblem jarvisProblem = new JarvisProblem(initialState);
 
+        // Solve the problem
+        JarvisProblem jarvisProblem = new JarvisProblem(initialState);
         String output = jarvisProblem.run(strategy);
 
+        // Write result to output file
         BufferedWriter out = new BufferedWriter(new FileWriter(outputFileArg));
         out.write(output);
         out.close();
